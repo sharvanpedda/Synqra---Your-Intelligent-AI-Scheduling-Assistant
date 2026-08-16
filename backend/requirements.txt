@@ -1,0 +1,29 @@
+# Schedule Assistant — backend dependencies (all free / local / open-source)
+# Python 3.12+ (developed against 3.14)
+
+# Web framework
+fastapi>=0.115
+uvicorn[standard]>=0.30
+python-multipart>=0.0.9
+pydantic>=2.7
+pydantic-settings>=2.3
+
+# Storage
+sqlalchemy>=2.0
+
+# Agentic RAG
+langgraph>=1.0
+chromadb>=0.6
+
+# Optional Google Calendar sync (google-auth also used for token verification)
+google-auth>=2.35
+google-auth-oauthlib>=1.2
+google-api-python-client>=2.140
+cryptography>=43.0
+
+# Scheduling / reminders
+apscheduler>=3.10
+
+
+# HTTP (LLM providers, Google verify)
+httpx>=0.27

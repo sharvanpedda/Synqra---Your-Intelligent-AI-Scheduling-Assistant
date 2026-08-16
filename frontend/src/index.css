@@ -1,0 +1,217 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ------------------------------------------------------------------ */
+/* Base                                                               */
+/* ------------------------------------------------------------------ */
+html {
+  color-scheme: dark;
+}
+
+body {
+  font-family: "Inter", ui-sans-serif, system-ui;
+  background-color: #07090f;
+  color: #e7e9ee;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+/* Layered background: faint radial glows + a fine engineering grid */
+.app-bg {
+  position: relative;
+  min-height: 100vh;
+  background:
+    radial-gradient(900px 500px at 15% -10%, rgba(242, 166, 90, 0.07), transparent 60%),
+    radial-gradient(900px 500px at 85% 0%, rgba(95, 212, 192, 0.06), transparent 60%),
+    radial-gradient(1200px 700px at 50% 110%, rgba(139, 124, 246, 0.05), transparent 60%),
+    #07090f;
+}
+.app-bg::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.022) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 20%, transparent 75%);
+  -webkit-mask-image: radial-gradient(ellipse 90% 60% at 50% 0%, black 20%, transparent 75%);
+}
+
+.font-mono {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+.font-display {
+  font-family: "Space Grotesk", "Inter", ui-sans-serif, system-ui;
+}
+
+::selection {
+  background: rgba(242, 166, 90, 0.28);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid #f2a65a;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Custom scrollbar — control-room feel */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #07090f;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e2637;
+  border-radius: 6px;
+  border: 2px solid #07090f;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2b3547;
+}
+
+/* date/time native pickers on dark */
+input[type="date"],
+input[type="time"],
+select {
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ */
+/* Reusable pieces                                                    */
+/* ------------------------------------------------------------------ */
+@layer components {
+  .input {
+    background: rgba(7, 9, 15, 0.6);
+    border: 1px solid #1e2637;
+    border-radius: 10px;
+    padding: 9px 12px;
+    color: #e7e9ee;
+    width: 100%;
+    font-size: 14px;
+    transition: border-color 0.15s, box-shadow 0.15s, background 0.15s;
+  }
+  .input::placeholder {
+    color: #8a93a6;
+  }
+  .input:focus {
+    outline: none;
+    border-color: rgba(242, 166, 90, 0.7);
+    box-shadow: 0 0 0 3px rgba(242, 166, 90, 0.12);
+    background: rgba(7, 9, 15, 0.9);
+  }
+
+  .btn-primary {
+    background: linear-gradient(120deg, #f2a65a, #e8914a);
+    color: #14100a;
+    font-weight: 600;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    box-shadow: 0 8px 24px -10px rgba(242, 166, 90, 0.55);
+    transition: transform 0.12s, box-shadow 0.2s, filter 0.15s;
+  }
+  .btn-primary:hover {
+    filter: brightness(1.06);
+    box-shadow: 0 12px 32px -10px rgba(242, 166, 90, 0.7);
+    transform: translateY(-1px);
+  }
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+  .btn-primary:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  .btn-ghost {
+    border: 1px solid #1e2637;
+    border-radius: 10px;
+    padding: 10px 18px;
+    font-size: 14px;
+    color: #8a93a6;
+    background: rgba(255, 255, 255, 0.015);
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+  }
+  .btn-ghost:hover {
+    color: #e7e9ee;
+    border-color: #2f3a4f;
+    background: rgba(255, 255, 255, 0.04);
+  }
+
+  .card {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.025), rgba(255, 255, 255, 0.008)), #10151f;
+    border: 1px solid #1e2637;
+    border-radius: 14px;
+    box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.03) inset, 0 12px 32px -16px rgba(0, 0, 0, 0.7);
+  }
+
+  .chip {
+    font-family: "IBM Plex Mono", ui-monospace, monospace;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 9px;
+    border-radius: 999px;
+    border: 1px solid #1e2637;
+    color: #8a93a6;
+    background: rgba(255, 255, 255, 0.02);
+    white-space: nowrap;
+  }
+
+  .grad-text {
+    background: linear-gradient(120deg, #ffd9a0 0%, #f2a65a 35%, #5fd4c0 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* shimmering skeleton */
+  .skeleton {
+    border-radius: 10px;
+    background: linear-gradient(90deg, #10151f 25%, #1a2231 50%, #10151f 75%);
+    background-size: 800px 100%;
+    animation: shimmer 1.6s linear infinite;
+  }
+}
+
+/* typing indicator dots */
+.type-dot {
+  animation: typeDot 1.2s ease-in-out infinite;
+}
+.type-dot:nth-child(2) {
+  animation-delay: 0.15s;
+}
+.type-dot:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+/* voice waveform bars */
+.wave-bar {
+  animation: wave 1s ease-in-out infinite;
+  transform-origin: center;
+}
+.wave-bar:nth-child(2) { animation-delay: 0.12s; }
+.wave-bar:nth-child(3) { animation-delay: 0.24s; }
+.wave-bar:nth-child(4) { animation-delay: 0.36s; }
+.wave-bar:nth-child(5) { animation-delay: 0.48s; }
+.wave-bar:nth-child(6) { animation-delay: 0.6s; }
+.wave-bar:nth-child(7) { animation-delay: 0.72s; }
+.wave-bar:nth-child(8) { animation-delay: 0.84s; }
+.wave-bar:nth-child(9) { animation-delay: 0.96s; }
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+}
